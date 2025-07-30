@@ -12,7 +12,7 @@ export function useLocalStorage(key, initialValue) {
   */
   const [state, setState] = useState(() => {
     const saved = localStorage.getItem(key);
-    return saved ? JSON.parse(saved) : initialValue;
+    return saved ? JSON.parse(saved) : (initialValue !== undefined ? initialValue : null);
   });
 
   /* 

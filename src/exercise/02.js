@@ -10,7 +10,7 @@ export function usePokemon(query) {
       .then(r => r.json())
       .then(setPokemon);
   }, [query]);
-  return pokemon;
+  return { data: pokemon };
 }
 
 function Pokemon({ query }) {
@@ -18,7 +18,7 @@ function Pokemon({ query }) {
    ✅ move the code from the useState and useEffect hooks into the usePokemon hook
    then, call the usePokemon hook to access the pokemon data in this component
   */
-  const pokemon = usePokemon(query);
+  const { data: pokemon } = usePokemon(query);
 
   // 🚫 don't worry about the code below here, you shouldn't have to touch it
   if (!pokemon) return <h3>Loading...</h3>;
