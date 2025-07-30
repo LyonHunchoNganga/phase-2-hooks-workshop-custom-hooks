@@ -12,7 +12,14 @@ export function useLocalStorage(key, initialValue) {
   */
   const [state, setState] = useState(() => {
     const saved = localStorage.getItem(key);
-    return saved ? JSON.parse(saved) : (initialValue !== undefined ? initialValue : null);
+    if (saved !== null) {
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return saved;
+      }
+    }
+    return initialValue !== undefined ? initialValue : null;
   });
 
   /* 
@@ -21,7 +28,11 @@ export function useLocalStorage(key, initialValue) {
    don't forget the dependencies array!
   */
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
+    if (typeof state === 'string') {
+      localStorage.setItem(key, state);
+    } else {
+      localStorage.setItem(key, JSON.stringify(state));
+    }
   }, [key, state]);
 
   /* 
